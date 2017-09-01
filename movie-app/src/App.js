@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Footer from './components/footer';
 import MovieHeader from './util/movieHeader.png';
 import Search from './components/search';
-import * as movieAPI from './components/movieAPI'; 
 import './App.css';
 
 class App extends Component {

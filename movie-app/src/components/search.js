@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Footer from './footer';
 import * as movieAPI from './movieAPI';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import './search.css';
 
 class Search extends Component {
     constructor(props) {
@@ -27,15 +31,34 @@ class Search extends Component {
                 ? 
             data.map((item, index) => 
                 { 
-                    return (<li key={index}>{item.title} {item.vote_average} {item.vote_count} {item.overview} {item.relase_date}</li>) 
+                    return (
+                        <div className="card" key={index}>
+                            <MuiThemeProvider>
+                            <Card>
+                                <CardHeader
+                                    title={item.title}
+                                    subtitle={item.release_date}
+                                    avatar={MOVIE_IMAGE_URL + item.poster_path}
+                                    actAsExpander={true}
+                                    showExpandableButton={true}
+                                />
+                                <CardText>
+                                    Average Rating: {item.vote_average}/10 ({item.vote_count})
+                                </CardText>
+                                <CardActions>
+                                    <FlatButton label="Compare" />
+                                </CardActions>
+                                <CardText expandable={true}>{item.overview}</CardText>
+                            </Card>
+                            </MuiThemeProvider>
+                        </div>
+                    ) 
                 }) 
                 : 
             [];
         return (
             <div>
-                <ul>
-                    {items}
-                </ul>
+                {items}
                 <Footer />
             </div>
         );
