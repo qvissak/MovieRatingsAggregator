@@ -1,0 +1,16 @@
+.sticky-footer {
+    color: gray;
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+hr {
+    width: 60%;
+    opacity: .5;
+}
