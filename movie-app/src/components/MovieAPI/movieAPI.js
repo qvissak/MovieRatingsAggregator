@@ -6,7 +6,7 @@ const get = async function (url) {
     return await fetch(url, 
         { mode: "cors" }
     ).then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
             return response.json();
         }
     }).catch((response) => {

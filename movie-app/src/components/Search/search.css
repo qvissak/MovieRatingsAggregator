@@ -1,0 +1,44 @@
+.center {
+    position: relative;
+    text-align: center;
+    padding-top: 100px;
+  }
+  input[type="search"] {
+    padding: 5px 9px 5px 16px;
+    margin: 10px;
+    height: 40px;
+    width: 575px;
+    border:1px solid #eaeaea;
+    box-shadow: 1px 1px 1px 1px #ccc;
+  }
+  input[type="submit"] {
+    padding: 0px 16px 0px 16px;
+    margin: 11px 4px 11px 4px;
+    height: 36px;
+    min-width: 54px;
+    border: 1px solid #f2f2f2;
+    color: #757575;
+    background-color: #f2f2f2;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: arial, sans-serif;
+  }
+  input[type="submit"]:hover {
+    color: #222;
+    background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1); 
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    cursor: pointer;
+  }
+  input:hover {
+    border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9;
+  }
+  input:focus {
+    border-color:#4d90fe;
+  }
+  .homepage-image {
+    height: 200px;
+    width: 200px;
+  }
+  form {
+    display: inline;
+  }

@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
-import Footer from './components/footer';
-import MovieHeader from './util/movieHeader.png';
-import Search from './components/search';
-import './App.css';
+import Search from './components/Search/search';
+import QuerySearchResults from './components/QuerySearchResults/QuerySearchResults';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       query: "",
-      search: false
+      search: false,
+      auto: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePopularMovies = this.handlePopularMovies.bind(this);
   }
 
   handleChange(event) {
     this.setState({query: event.target.value});
   }
 
-  handleSubmit(event) {
+  handleSubmit() {
+    this.setState({search: true})
+  }
+
+  handlePopularMovies() {
+    this.setState({auto: true})
     this.setState({search: true})
   }
 
@@ -27,23 +32,10 @@ class App extends Component {
     return (
       <div>
         {
-          !this.state.search 
-          ? 
-          <div>
-            <div className="center">
-              <img className="homepage-image" src={MovieHeader} alt="movieHeader" />
-              <br />
-              <form onSubmit={this.handleSubmit}>
-                <input type="search" value={this.state.query} onChange={this.handleChange} placeholder="Try searching a movie title, actor or genre" name="query"></input>
-                <br />
-                <input type="submit" value="Search Movie" onChange={this.handleChange}></input>
-              </form>
-              <input type="submit" value="Popular Movies"></input>   
-            </div>
-            <Footer />
-          </div>
+          !this.state.search ? 
+            <Search handleChange={this.handleChange} handleSubmit={this.handleSubmit} query={this.state.query} handlePopularMovies={this.handlePopularMovies}/>
           :
-         <Search searchQuery={this.state.query} />
+            <QuerySearchResults searchQuery={this.state.query} auto={this.state.auto} />
         }
       </div>
     );

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Footer from './footer';
-import * as movieAPI from './movieAPI';
+import Footer from '../Footer/footer';
+import * as movieAPI from '../MovieAPI/movieAPI';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import './search.css';
+import './QuerySearchResults.css';
 
-class Search extends Component {
+class QuerySearchResults extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -15,9 +15,10 @@ class Search extends Component {
     }
 
     componentWillMount() {
-        var response = movieAPI.getSearchResults(this.props.searchQuery);
+        var response = !this.props.auto ? movieAPI.getSearchResults(this.props.searchQuery) : movieAPI.getPopularResults();
+        console.log(!this.props.auto);
         response.then(res => {
-            this.setState({ data: this.state.data.concat(res.results) });
+            if (res) this.setState({ data: this.state.data.concat(res.results) });
         }).catch(error => {
             console.log(error);
         });
@@ -31,6 +32,7 @@ class Search extends Component {
                 ? 
             data.map((item, index) => 
                 { 
+                    var rating = item.vote_count === 0 ? "No reviews yet" : item.vote_average + `/10 (` + item.vote_count + `)`
                     return (
                         <div className="card" key={index}>
                             <MuiThemeProvider>
@@ -43,26 +45,32 @@ class Search extends Component {
                                     showExpandableButton={true}
                                 />
                                 <CardText>
-                                    Average Rating: {item.vote_average}/10 ({item.vote_count})
+                                    <b>Average Rating: </b>{rating}
+                                    <br />
+                                    <br />
+                                    <b>Description: </b>
+                                    {item.overview}
                                 </CardText>
                                 <CardActions>
                                     <FlatButton label="Compare" />
                                 </CardActions>
-                                <CardText expandable={true}>{item.overview}</CardText>
+                                <CardText expandable={true}></CardText>
                             </Card>
                             </MuiThemeProvider>
                         </div>
                     ) 
                 }) 
-                : 
-            [];
+                :
+                console.log("No search results");
         return (
             <div>
-                {items}
+                <div className="container">
+                    {items}
+                </div>
                 <Footer />
             </div>
         );
     }
 }
 
-export default Search;
+export default QuerySearchResults;

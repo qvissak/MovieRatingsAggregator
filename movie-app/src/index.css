@@ -1,5 +1,11 @@
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: sans-serif;
+}
+.container {
+  position: relative;
+  height: auto !important;
+  min-height: calc(100vh - 66px) /* Take footer into consideration */
 }
