@@ -4,6 +4,7 @@ import * as movieAPI from '../MovieAPI/movieAPI';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import BackButton from '../BackButton/backButton';
 import './QuerySearchResults.css';
 
 class QuerySearchResults extends Component {
@@ -16,7 +17,6 @@ class QuerySearchResults extends Component {
 
     componentWillMount() {
         var response = !this.props.auto ? movieAPI.getSearchResults(this.props.searchQuery) : movieAPI.getPopularResults();
-        console.log(!this.props.auto);
         response.then(res => {
             if (res) this.setState({ data: this.state.data.concat(res.results) });
         }).catch(error => {
@@ -61,12 +61,15 @@ class QuerySearchResults extends Component {
                     ) 
                 }) 
                 :
-                console.log("No search results");
+                console.log("Need to implement");
+        var title = !this.props.auto ? "Showing search results for " + this.props.searchQuery + ":" : "Top 20 Trending Movies:";
         return (
             <div>
                 <div className="container">
+                    <h1>{title}</h1>
                     {items}
                 </div>
+                <BackButton back={this.props.back} />
                 <Footer />
             </div>
         );

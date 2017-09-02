@@ -1,3 +1,6 @@
+body {
+  min-width: 625px;
+}
 .center {
     position: relative;
     text-align: center;
@@ -6,8 +9,8 @@
   input[type="search"] {
     padding: 5px 9px 5px 16px;
     margin: 10px;
-    height: 40px;
-    width: 575px;
+    height: 3em;
+    width: 44em;
     border:1px solid #eaeaea;
     box-shadow: 1px 1px 1px 1px #ccc;
   }

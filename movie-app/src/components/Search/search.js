@@ -15,7 +15,7 @@ class Search extends Component {
                 <img className="homepage-image" src={MovieHeader} alt="movieHeader" />
                 <br />
                 <form onSubmit={this.props.handleSubmit}>
-                  <input type="search" value={this.props.query} onChange={this.props.handleChange} placeholder="Try searching a movie title, actor or genre"></input>
+                  <input type="search" value={this.props.query} onChange={this.props.handleChange} placeholder="Search for a movie, TV show, person..."></input>
                   <br />
                   <input type="submit" value="Search Movie" onChange={this.props.handleChange}></input>
                 </form>

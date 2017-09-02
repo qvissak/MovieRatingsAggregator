@@ -13,6 +13,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePopularMovies = this.handlePopularMovies.bind(this);
+    this.back = this.back.bind(this);
   }
 
   handleChange(event) {
@@ -21,6 +22,10 @@ class App extends Component {
 
   handleSubmit() {
     this.setState({search: true})
+  }
+
+  back() {
+    this.setState({search: false})
   }
 
   handlePopularMovies() {
@@ -35,7 +40,7 @@ class App extends Component {
           !this.state.search ? 
             <Search handleChange={this.handleChange} handleSubmit={this.handleSubmit} query={this.state.query} handlePopularMovies={this.handlePopularMovies}/>
           :
-            <QuerySearchResults searchQuery={this.state.query} auto={this.state.auto} />
+            <QuerySearchResults searchQuery={this.state.query} auto={this.state.auto} back={this.back} />
         }
       </div>
     );

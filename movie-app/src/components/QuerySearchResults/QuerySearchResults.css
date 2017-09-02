@@ -1,3 +1,10 @@
+body {
+    min-width: 550px;
+}
 .card {
     padding: 20px 150px 20px 150px;
+}
+h1 {
+    font-family: Roboto, sans-serif;
+    margin: 20px 150px 10px 75px;
 }
