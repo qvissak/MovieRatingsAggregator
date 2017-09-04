@@ -11,7 +11,7 @@ class QuerySearchResults extends Component {
       super(props);
       this.state = {
         data: [],
-        NYTReview: []
+        allReviews: []
       }
     }
 
@@ -19,16 +19,21 @@ class QuerySearchResults extends Component {
     componentWillMount() {
         var response = !this.props.auto ? movieAPI.getSearchResults(this.props.searchQuery) : movieAPI.getPopularResults();
         response.then((res) => {
-            if (res) this.setState({ data: this.state.data.concat(res.results) });
-            for (var i = 0; i < this.state.data.length; i++){
-                var reviews = movieAPI.getReviewResults(this.state.data[i].title);
+            var local = []
+            for (var i = 0; i < res.results.length; i++){
+                var reviews = movieAPI.getReviews(res.results[i].id);
                 reviews.then((res2) => {
-                    res2 ? (res2.results ? this.setState({ NYTReview: this.state.NYTReview.concat(res2.results[0].link.url) }) : null) : this.setState({ NYTReview: this.state.NYTReview.concat('') })
-                }).catch((error2) => {
-                    console.log(error2);
+                    if (res2) {
+                        var temp = []
+                        for (var j = 0; j < res2.results.length; j++){
+                             temp.push({ author: res2.results[j].author, content: res2.results[j].content })
+                        }
+                        local.push(temp);
+                    }
                 });
-                movieAPI.sleep(1000);
             }
+            this.setState({ allReviews: local })
+            if (res) this.setState({ data: this.state.data.concat(res.results) });            
         }).catch((error) => {
             console.log(error);
         });
@@ -36,15 +41,27 @@ class QuerySearchResults extends Component {
 
     render () {
         const MOVIE_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-        const { data } = this.state;
+        const { data, allReviews } = this.state;
+        console.log(allReviews)
+        console.log(allReviews.length)
         const items = 
             data 
                 ? 
-            data.map((item, index) => 
+            data.map((item) => 
                 { 
-                    var rating = item.vote_count === 0 ? "No ratings yet!" : item.vote_average + `/10 (` + item.vote_count + `)`
+                    var rating = item.vote_count === 0 ? "No ratings yet!" : item.vote_average + `/10 (` + item.vote_count + `)`;
+                    var reviewContent = 
+                        allReviews.map((review, index) => {
+                            return (
+                                <div key={index}>
+                                    <b>Author: </b>{review[index].author}
+                                    <b>Review: </b>{review[index].content}
+                                </div>
+                            )
+                        })
+                    // console.log(reviewContent);
                     return (
-                        <div className="card" key={index}>
+                        <div className="card" key={item.title}>
                             <MuiThemeProvider>
                             <Card>
                                 <CardHeader
@@ -60,11 +77,8 @@ class QuerySearchResults extends Component {
                                     <br />
                                     <b>Description: </b>{item.overview ? item.overview : "No description available."}
                                 </CardText>
-                                {/* Had difficulty finding an API that returned plain text movie reviews as opposed to links */}
                                 <CardText expandable={true}>
-                                    {
-                                        this.state.NYTReview[index] ? <a target="_blank" href={this.state.NYTReview[index]}>New York Times Review</a> : <p>No New York Times review available</p>
-                                    }
+                                    {reviewContent}
                                 </CardText>
                             </Card>
                             </MuiThemeProvider>

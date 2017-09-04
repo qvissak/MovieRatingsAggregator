@@ -12,7 +12,7 @@ body {
     height: 3em;
     width: 44em;
     border:1px solid #eaeaea;
-    box-shadow: 1px 1px 1px 1px #ccc;
+    box-shadow: 1px 1px 1px 1px rgba(204, 204, 204, 0.2);
   }
   input[type="submit"] {
     padding: 0px 16px 0px 16px;
