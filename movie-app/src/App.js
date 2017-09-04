@@ -25,7 +25,9 @@ class App extends Component {
   }
 
   back() {
-    this.setState({search: false})
+    this.setState({search: false});
+    this.setState({auto: false});
+    this.setState({query: ""});
   }
 
   handlePopularMovies() {

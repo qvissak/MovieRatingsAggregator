@@ -20,6 +20,9 @@ a {
 .title {
     margin: 25px 150px 25px 75px;
     font-family: Roboto, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .content {
     padding-top: 100px;

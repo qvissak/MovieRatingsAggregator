@@ -23,10 +23,11 @@ class QuerySearchResults extends Component {
             for (var i = 0; i < this.state.data.length; i++){
                 var reviews = movieAPI.getReviewResults(this.state.data[i].title);
                 reviews.then((res2) => {
-                    res2 ? (res2.results.length > 0 ? this.setState({ NYTReview: this.state.NYTReview.concat(res2.results[0].link.url) }) : null) : this.setState({ NYTReview: this.state.NYTReview.concat('') })
+                    res2 ? (res2.results ? this.setState({ NYTReview: this.state.NYTReview.concat(res2.results[0].link.url) }) : null) : this.setState({ NYTReview: this.state.NYTReview.concat('') })
                 }).catch((error2) => {
                     console.log(error2);
                 });
+                movieAPI.sleep(1000);
             }
         }).catch((error) => {
             console.log(error);
@@ -57,8 +58,7 @@ class QuerySearchResults extends Component {
                                     <b>Average Rating: </b>{rating}
                                     <br />
                                     <br />
-                                    <b>Description: </b>
-                                    {item.overview}
+                                    <b>Description: </b>{item.overview ? item.overview : "No description available."}
                                 </CardText>
                                 {/* Had difficulty finding an API that returned plain text movie reviews as opposed to links */}
                                 <CardText expandable={true}>
@@ -74,14 +74,6 @@ class QuerySearchResults extends Component {
                 :
             <p>No content available.</p>
         var title = !this.props.auto ? "Showing search results for " + this.props.searchQuery + ":" : "Top 20 Trending Movies:";
-        const styles = {
-            button: {
-              margin: 25,
-              position: 'fixed',
-              bottom: 0,
-              right: 0
-            }
-          };
         return (
             <div>
                 <div className="container">

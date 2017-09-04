@@ -28,7 +28,11 @@ const getPopularResults = async () => {
 }
 
 const getReviewResults = async (query) => {
-    return await get(NYT_REVIEWS_URL.replace("{query}", query).replace("{query}", query));
+    return await get(NYT_REVIEWS_URL.replace("{query}", query).replace("{query}", query))
 }
 
-export { getSearchResults, getPopularResults, getReviewResults };
+const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+export { getSearchResults, getPopularResults, getReviewResults, sleep };
