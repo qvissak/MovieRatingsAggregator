@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Footer from '../Footer/footer';
 import * as movieAPI from '../MovieAPI/movieAPI';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import BackButton from '../BackButton/backButton';
 import './QuerySearchResults.css';
@@ -62,9 +60,6 @@ class QuerySearchResults extends Component {
                                     <b>Description: </b>
                                     {item.overview}
                                 </CardText>
-                                {/* <CardActions>
-                                    <FlatButton label="Add to Compare" onClick={} />
-                                </CardActions> */}
                                 {/* Had difficulty finding an API that returned plain text movie reviews as opposed to links */}
                                 <CardText expandable={true}>
                                     {
@@ -98,19 +93,6 @@ class QuerySearchResults extends Component {
                     <div className="content">
                         {items}
                     </div>
-                    {
-                        this.props.comparison.length >= 3 ? 
-                        <MuiThemeProvider>
-                            <RaisedButton
-                                label={"Compare (" + this.props.comparison.length + ")"}
-                                primary={true}
-                                style={styles.button}
-                                onClick={this.props.revealComparison}
-                            />
-                        </MuiThemeProvider>
-                        :
-                        <div></div>
-                    }
                 </div>
                 <Footer />
             </div>
