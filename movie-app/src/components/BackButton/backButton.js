@@ -4,9 +4,6 @@ import Reply from 'material-ui/svg-icons/content/reply';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class BackButton extends Component {
-    constructor(props) {
-      super(props);
-    }
     render () {
         const styles = {
             button: {

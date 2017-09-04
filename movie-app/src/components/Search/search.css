@@ -6,7 +6,7 @@ body {
     text-align: center;
     padding-top: 100px;
   }
-  input[type="search"] {
+  .search-bar-homepage {
     padding: 5px 9px 5px 16px;
     margin: 10px;
     height: 3em;
