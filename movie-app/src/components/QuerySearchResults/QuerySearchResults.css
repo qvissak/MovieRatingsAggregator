@@ -47,3 +47,15 @@ a {
   input:focus {
     border-color:#4d90fe;
   }
+  .content hr {
+    opacity: .5;
+    height: .01em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .gray {
+      color: #555;
+  }
+  .intheline {
+      display: inline;
+  }

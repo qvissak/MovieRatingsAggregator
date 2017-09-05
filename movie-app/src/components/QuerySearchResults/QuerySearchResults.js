@@ -19,7 +19,6 @@ class QuerySearchResults extends Component {
     componentWillMount() {
         var response = !this.props.auto ? movieAPI.getSearchResults(this.props.searchQuery) : movieAPI.getPopularResults();
         response.then((res) => {
-            var local = []
             for (var i = 0; i < res.results.length; i++){
                 var reviews = movieAPI.getReviews(res.results[i].id);
                 reviews.then((res2) => {
@@ -28,12 +27,11 @@ class QuerySearchResults extends Component {
                         for (var j = 0; j < res2.results.length; j++){
                              temp.push({ author: res2.results[j].author, content: res2.results[j].content })
                         }
-                        local.push(temp);
+                        this.setState({ allReviews: this.state.allReviews.concat([temp]) })
                     }
                 });
             }
-            this.setState({ allReviews: local })
-            if (res) this.setState({ data: this.state.data.concat(res.results) });            
+            if (res) this.setState({ data: this.state.data.concat(res.results) });       
         }).catch((error) => {
             console.log(error);
         });
@@ -42,26 +40,25 @@ class QuerySearchResults extends Component {
     render () {
         const MOVIE_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
         const { data, allReviews } = this.state;
-        console.log(allReviews)
-        console.log(allReviews.length)
         const items = 
             data 
                 ? 
-            data.map((item) => 
+            data.map((item, index) => 
                 { 
-                    var rating = item.vote_count === 0 ? "No ratings yet!" : item.vote_average + `/10 (` + item.vote_count + `)`;
-                    var reviewContent = 
-                        allReviews.map((review, index) => {
-                            return (
-                                <div key={index}>
-                                    <b>Author: </b>{review[index].author}
-                                    <b>Review: </b>{review[index].content}
-                                </div>
-                            )
-                        })
-                    // console.log(reviewContent);
+                    var rating = item.vote_count === 0 ? "No ratings yet." : item.vote_average + `/10 (` + item.vote_count + `)`;
+                    var reviewContent = [];
+                    for (var review in allReviews[index]){
+                        if (allReviews[index]) {
+                            reviewContent.push(
+                            <div key={allReviews[index][review].author}>
+                                <hr />
+                                <div className="gray">By: {allReviews[index][review].author}</div>
+                                {allReviews[index][review].content}
+                            </div>)
+                        }
+                    }
                     return (
-                        <div className="card" key={item.title}>
+                        <div className="card" key={index}>
                             <MuiThemeProvider>
                             <Card>
                                 <CardHeader
@@ -78,7 +75,8 @@ class QuerySearchResults extends Component {
                                     <b>Description: </b>{item.overview ? item.overview : "No description available."}
                                 </CardText>
                                 <CardText expandable={true}>
-                                    {reviewContent}
+                                    <b>Reviews: </b>
+                                    {reviewContent.length > 0 ? reviewContent : <div className="intheline">No reviews yet.</div>}
                                 </CardText>
                             </Card>
                             </MuiThemeProvider>

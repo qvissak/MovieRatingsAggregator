@@ -10,7 +10,7 @@
     position: relative;
     overflow: hidden;
 }
-hr {
+.sticky-footer hr {
     width: 60%;
     opacity: .5;
 }
